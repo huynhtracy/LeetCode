@@ -1,0 +1,114 @@
+//medium difficulty
+//You are given two non-empty linked lists representing two non-negative integers.
+//The digits are stored in reverse order, and each of their nodes contains a single digit.
+//Add the two numbers and return the sum as a linked list.
+
+import java.util.ArrayList;
+import java.lang.Math;
+
+
+//  * Definition for singly-linked list.
+//  * public class ListNode {
+//  *     int val;
+//  *     ListNode next;
+//  *     ListNode() {}
+//  *     ListNode(int val) { this.val = val; }
+//  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+//  * }
+
+
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        
+        //put digits into arraylists num1, num2
+        
+        ArrayList<Integer> num1 = new ArrayList<Integer>();
+        ArrayList<Integer> num2 = new ArrayList<Integer>();
+
+        num1.add(l1.val);
+        num2.add(l2.val);
+        
+        while (l1.next!=null){
+            num1.add(l1.next.val);
+            l1 = l1.next;
+        }
+        
+         while (l2.next!=null){
+            num2.add(l2.next.val);
+            l2 = l2.next;
+        }
+              
+        ArrayList<Integer> sumDigits = new ArrayList<Integer>();       
+        
+        //add extra zeroes at the end of the shorter array so the indices match
+        if(num1.size() > num2.size()){
+            int iters = num1.size()-num2.size();
+            for (int counter = 0; counter < iters; counter++){
+                num2.add(0);
+            }
+        }
+        if(num2.size() > num1.size()){
+            int iters = num2.size()-num1.size();
+            for (int counter = 0; counter < iters; counter++){
+                num1.add(0);
+            }
+        }
+        
+        //add one extra zero for each for carrying
+        num1.add(0);
+        num2.add(0);
+        
+        for (int i = 0; i < Math.max(num1.size(),num2.size());i++){     
+            if (num1.get(i) + num2.get(i) > 9){
+                sumDigits.add(num1.get(i) + num2.get(i) - 10);
+                num1.set(i+1,num1.get(i+1)+1);   
+            }
+            else {
+              sumDigits.add(num1.get(i) + num2.get(i));  
+            }
+           
+        }
+                
+        sumDigits.add(0); 
+        int [] sumTotal;
+        
+        //if there are zeroes at the front      
+        if ((sumDigits.get(sumDigits.size()-2)==0) && (sumDigits.get(sumDigits.size()-1)==0)){
+            sumTotal = new int [sumDigits.size()-2];
+            for (int k = 0; k < sumTotal.length; k++){
+                sumTotal[k] = sumDigits.get(k);
+            }    
+        }
+       else if (sumDigits.get(sumDigits.size()-1)==0){
+            sumTotal = new int [sumDigits.size()-1];
+            for (int k = 0; k < sumTotal.length; k++){
+                sumTotal[k] = sumDigits.get(k);
+            }    
+        }  
+        else {
+            sumTotal = new int [sumDigits.size()];
+            for (int k = 0; k < sumTotal.length; k++){
+                sumTotal[k] = sumDigits.get(k);
+            }  
+        }
+        
+        ListNode temp = new ListNode();
+        ListNode head = new ListNode(sumTotal[0]);        
+        
+        if(sumTotal.length ==1){ 
+            return head; 
+        }
+       
+        head.next = temp;
+        
+        for (int j = 1; j < sumTotal.length; j++){
+            temp.val = sumTotal[j];
+            //we don't want to do this for the last iteration:
+            if (j != (sumTotal.length-1)){
+                temp.next = new ListNode();
+                temp = temp.next;
+            }
+        }
+        return head;
+    }
+}
