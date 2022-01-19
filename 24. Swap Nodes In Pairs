@@ -1,0 +1,74 @@
+//medium difficulty
+//Given a linked list, swap every two adjacent nodes and return its head. 
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        
+        ListNode pointer1;
+        ListNode pointer2;
+        ListNode temp;
+        
+        //if empty list or list of length 1
+        if (head == null || head.next == null){
+            return head;
+        }
+        
+        
+        pointer2 = head;
+        pointer1 = head.next;
+        temp = pointer1.next;  
+        
+        pointer1.next = pointer2;
+        pointer2.next = temp; //(could be null, thats fine)
+        head = pointer1;
+        
+        //if list length of 2
+        if(temp == null){ 
+            return head;
+        }
+        
+        //shift pointers
+        pointer1 = pointer1.next;
+        pointer2 = pointer2.next;
+        temp = temp.next;
+        
+        //if list length of 3
+        if(temp == null){
+            return head;
+        }
+        
+        while(true){
+            pointer1.next = temp;
+            temp = temp.next;
+            pointer1.next.next = pointer2;
+            pointer2.next = temp;
+            
+            
+            if(temp == null){ //last element
+                return head;
+            }
+            
+            if(temp.next == null){ //one extra element leftover
+                return head;
+                
+            }
+            
+            //else, there are at least 2 more elements, so we repeat the process
+            pointer1 = pointer1.next.next;
+            pointer2 = pointer2.next;
+            temp = temp.next;
+            
+        }
+            
+    }      
+    }
