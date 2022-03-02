@@ -1,0 +1,84 @@
+//Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        
+        ListNode temp = new ListNode();
+        temp = head; 
+        ListNode temp2 = new ListNode();
+        temp2 = head; //used to get length of linked list
+
+        //can we do this without first finding the length and newn?
+        //how do we know when we reach the nth node form the end without knowing length
+    
+        
+        //get length of linkedlist
+        
+        int length = 0;
+        while (temp2.next != null){
+            length++;
+            temp2 = temp2.next;
+        }
+        length ++;  //its always one more because the last one always points to null
+        System.out.println("length:" + length);
+        
+       
+        
+        if (length == 1){
+            //just delete the one element
+            head = null; 
+            return head;
+        }
+        
+        else {
+            
+        //change n to give us the index from the beginning of the list
+            
+        int newn = length - (n-1);
+        System.out.println("newn: "+newn);
+        //newn being the position from the front of list
+
+        //if first node to be delted
+        
+        if(newn == 1){
+            head = temp.next;
+            return head; 
+        }
+            
+            
+        //if the last node is to be deleted
+        
+        if (newn == length){
+            
+            for (int i = 0; i < length-2; i++){
+                //iterate length - 2 times
+                temp = temp.next;
+            }
+            temp.next = null; 
+            return head; 
+        }
+        
+        
+        for (int i = 0; i < newn-2 ; i++){
+            System.out.println("temp val: "+ temp.val);
+                temp = temp.next;
+        }
+        temp.next = temp.next.next;
+                
+        return head;
+        
+        
+        
+    }
+}
+}
