@@ -1,0 +1,51 @@
+//Given an integer x, return true if x is palindrome integer.
+//An integer is a palindrome when it reads the same backward as forward.
+//For example, 121 is a palindrome while 123 is not
+
+import java.util.ArrayList;
+import static java.lang.Math.pow;
+
+class Solution {
+       
+    public boolean isPalindrome(int x) {
+        
+        boolean bool = false; 
+        if (x < 0){
+        //case 0: negative numbers 
+            return false; 
+        } 
+            
+        int numDig = 1;
+        int num = x;
+        while(true){
+            if(num/10 <1){
+                break;
+            }
+            num= num/10;
+            numDig++;
+        }
+        
+        //after you have num of digits can extract each digit and put into an array
+        
+        int [] array = new int [numDig];
+        
+        for (int i = 0; i < numDig; i++){
+            array[i] = (x%10);
+            x=x/10;
+            //recall int division - throw away the remainder   
+        }
+         
+        //now compare digits 
+        //if numDig is odd, it will divide by 2 and take floor, still works
+        
+        for (int j= 0; j < numDig/2; j++){
+            if(array[j]!=array[numDig-1-j]){
+                return false;
+            }  
+        }
+           
+        return true;
+        
+    }
+    
+}
