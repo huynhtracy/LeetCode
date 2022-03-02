@@ -1,0 +1,154 @@
+//Given an integer, convert it to a roman numeral
+
+class Solution {
+    public String intToRoman(int num) {
+            
+        String string = "";
+            
+        //determine the number of digits
+        
+        int numDig = 1;
+        int number = num;
+       
+        while(true){
+            if(number/10 <1){
+                break;
+            }
+            number= number/10;
+            numDig++;
+        }
+        
+        //after you have num of digits can extract each digit and put into an array
+        
+        int [] array = new int [numDig];
+        
+        for (int i = (numDig-1); i >= 0 ; i--){
+            array[i] = (num%10);
+            num=num/10;
+        }
+        
+        
+        //starting with the first digit and looping through to the end of array
+        //if its a 4 or 9, do something special 
+        
+        
+        for(int i = 0; i < numDig; i++){
+            if (array[i] != 4 &&  array[i] != 9){
+                //not a 4 or 9 so proceed as usual, adding chars to string
+                //check digit place
+                //place = numDig - i;
+                
+                //4 - thousands
+                //3 - hundreds
+                //2 - tens
+                //1 - ones
+                
+                if ((numDig - i) == 4){
+                    //in the thousands 
+                    for (int j = 0; j < array[i]; j++){
+                        string += "M";
+                    }
+                }
+                else if ((numDig - i) == 3){
+                    //in the hundreds
+                    
+                    if (array[i]<5){
+                        //use C's
+                        for (int j = 0; j < array[i]; j++){
+                            string += "C";
+                        }
+                    }
+                    if (array[i] >=5) {
+                        //use D plus C's potentially
+                        //it woul dbe max one D because 2 D's = M
+                        
+                        string += "D";
+                        //how many C's to add?
+                        //array[i] - 5 loops
+                        for (int j = 0; j < array[i]-5; j++){
+                            string += "C";
+                        }
+                    }   
+                }
+                else if ((numDig - i) == 2){
+                    //tens
+                       
+                      if (array[i]<5){
+                        //use X's
+                        for (int j = 0; j < array[i]; j++){
+                            string += "X";
+                        }
+                    }
+                    if (array[i] >=5) {
+                        
+                        string += "L";
+                        for (int j = 0; j < array[i]-5; j++){
+                            string += "X";
+                        }
+                    }  
+                }
+                 else if ((numDig - i) == 1){
+                     //ones
+                     //I and V's
+                     
+                    if (array[i]<5){
+                        //use I's
+                        for (int j = 0; j < array[i]; j++){
+                            string += "I";
+                        }
+                    }
+                    if (array[i] >=5) {
+                        //use V plus I's potentially
+                        string += "V";
+                        for (int j = 0; j < array[i]-5; j++){
+                            string += "I";
+                        }
+                    }                            
+                }
+            
+            }
+            else {
+                
+                if ((numDig - i) == 3){
+                    //hundreds
+                    //400 or 900
+                    if (array[i] == 4){
+                        string += "CD";
+                    }
+                    else {
+                        string += "CM";
+                    }
+                    
+                }
+                else if ((numDig - i) == 2){
+                    //tens
+                    //40 or 90
+                    if (array[i] == 4){
+                        string += "XL";
+                    }
+                    else {
+                        string += "XC";
+                    }
+                }
+                else if ((numDig - i) == 1){
+                    //ones
+                    //4 or 9
+                    if (array[i] == 4){
+                        string += "IV";
+                    }
+                    else {
+                        string += "IX";
+                    }
+                }
+                
+                
+           }   
+        
+        }
+            
+        System.out.println(string);
+        
+        return string;
+    }
+    
+}
