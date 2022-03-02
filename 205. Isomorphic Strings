@@ -1,0 +1,85 @@
+//Given two strings s and t, determine if they are isomorphic.
+//Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+
+import java.util.ArrayList;
+//import java.util.List;
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        
+     //turn it into a code
+        //returns true if both have the same code
+        String code1 = "";
+        int currentNum = 0; 
+        boolean bool = true;
+        ArrayList <Integer> array = new ArrayList <Integer>();
+        
+        String code2 = "";
+        int currentNum2 = 0; 
+        boolean bool2 = true;
+        ArrayList <Integer> array2 = new ArrayList <Integer>();
+        for (int i = 0; i < s.length(); i++){
+            //for each char in s
+            bool = true;
+            if(i==0){
+                //if the first letter
+                array.add(0);
+            }
+            else {
+                for (int j = 0; j < array.size(); j++){              
+                    if(s.charAt(i)==s.charAt(j)){
+                        array.add(array.get(j));
+                        bool = false;
+                        break; 
+                    }   
+                }
+                //if it goes through the for loop and there were no matches:
+                if(bool){
+                    currentNum++;
+                    array.add(currentNum);
+                }
+            }
+        }
+        
+        //print out the array/ add to string
+        for(int i = 0; i < array.size(); i++){
+            code1 = code1 + array.get(i) +'-';
+        }
+        
+        // System.out.println(code1);
+     
+        //***************************
+ 
+        for (int i = 0; i < t.length(); i++){
+            bool2 = true;
+            //for each char in s
+            
+            if(i==0){
+                //if the first letter
+                array2.add(0);
+            }
+            else {
+                for (int j = 0; j < array2.size(); j++){              
+                    if(t.charAt(i)==t.charAt(j)){
+                        array2.add(array2.get(j));
+                        bool2 = false;
+                        break; 
+                    }   
+                }
+                //if it goes through the for loop and there were no matches:
+                if(bool2){
+                    currentNum2++;
+                    array2.add(currentNum2);
+                }
+            }
+        }
+        
+        //print out the array/ add to string
+        for(int i = 0; i < array2.size(); i++){
+            code2 = code2 + array2.get(i) + '-';
+        }
+        
+        // System.out.println(code2); 
+        return code1.equals(code2);
+        
+    }
+}
